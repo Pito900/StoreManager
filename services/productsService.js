@@ -4,7 +4,11 @@ const getAllProducts = () => {
    const products = productsFromModel.getAllProducts(); // extraindo a função do objeto importado
    return products;
 };
+
+const getProductById = (id) => productsFromModel.getProductById(id);
+
 // essa função, que retorna toda a tabela de produtos, vamos exportar para termos acesso na camada de controle.
 module.exports = {
     getAllProducts,
+    getProductById,
 };
