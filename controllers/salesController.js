@@ -11,6 +11,9 @@ router.get('/', async (_req, res) => {
 router.get('/:id', async (req, res) => {
   const { id } = req.params;
   const [sales] = await salesFromService.getSalesById(id);
+  if (!sales.length) {
+    return res.status(404).json({ message: 'Sale not found' });
+  }
   res.status(200).json(sales);
 });
 

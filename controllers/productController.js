@@ -1,4 +1,5 @@
 const express = require('express');
+
 const productsFromService = require('../services/productsService'); // estamos pegando a função q vem do product service. Essa função pega a base de dados
 
 const router = express.Router();
@@ -11,6 +12,9 @@ router.get('/', async (_req, res) => {
 router.get('/:id', async (req, res) => {
   const { id } = req.params;
   const [products] = await productsFromService.getProductById(id);
+  if (!products.length) {
+    return res.status(404).json({ message: 'Product not found' });
+  }
   res.status(200).json(products[0]); // o zero é para tirar do vetor. Deixar apenas o objeto.
 });
 
