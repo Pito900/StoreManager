@@ -10,9 +10,14 @@ const getAllProducts = () => {
 const getProductById = (id) => connection.execute(
         'SELECT * FROM StoreManager.products WHERE id = ?;', [id],
     );
+// criando produto, assim como na aula.
+const createProducts = async (name, quantity) => connection.execute(
+    'INSERT INTO products (name, quantity) VALUES (?, ?)', [name, quantity],
+);
 
 // exportando essa função para utilizarmos na camada de serviço.
 module.exports = {
     getAllProducts,
     getProductById,
+    createProducts,
 };
