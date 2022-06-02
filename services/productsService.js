@@ -7,10 +7,7 @@ const getAllProducts = () => {
 
 const getProductById = (id) => productsFromModel.getProductById(id);
 
-const createProducts = (name, quantity) => {
-    productsFromModel.createProducts(name, quantity);
-    return { name, quantity };
-};
+const createProducts = (name, quantity) => productsFromModel.createProducts(name, quantity);
 
 // essa função, que retorna toda a tabela de produtos, vamos exportar para termos acesso na camada de controle.
 module.exports = {

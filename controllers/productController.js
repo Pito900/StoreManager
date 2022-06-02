@@ -18,11 +18,11 @@ router.post('/', productsValidate.productsValidation, async (req, res) => {
   if (products.some((product) => product.name === name)) {
     return res.status(409).json({ message: 'Product already exists' });
   }
-  productsFromService.createProducts(name, quantity);
-  const ALLproducts = await productsFromService.getAllProducts();
-  const [addedProduct] = ALLproducts[0].filter((product) => product.name === name 
+  await productsFromService.createProducts(name, quantity);
+  const newProductsData = await productsFromService.getAllProducts();
+  const [newProduct] = newProductsData[0].filter((product) => product.name === name 
    && product.quantity === quantity);
-  res.status(201).json(addedProduct);
+  res.status(201).json(newProduct);
 } catch (error) {
   res.status(500).json({ message: error.message });
 }
