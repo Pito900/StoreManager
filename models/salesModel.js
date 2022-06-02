@@ -31,7 +31,30 @@ ORDER BY
     product_id ASC;`, [id],
 );
 
+// os dois proximos creat são para cria um post no /sale (pois temos duas tabelas que juntamos para obter a nossa api)
+// Pegando o ultimo id..https://stackoverflow.com/questions/12125385/last-inserted-id-from-specific-table
+// quando eu criar uma nova linha em sale com o creatSale, vou usar get lastSaleId 
+const getLastSaleId = async () => {
+        const [lastSaleId] = await connection.execute(
+            'SELECT id FROM sales ORDER BY  id DESC LIMIT 1',
+        );
+        return Number(lastSaleId[0].id);
+};
+// criando o aleProduct
+const createSaleProduct = (id, { productId, quantity }) => connection.execute(`
+      INSERT INTO sales_products(sale_id, product_id, quantity) VALUES (?, ?, ?)`,
+      [id, productId, quantity]);
+// esse é para a data q ta na tabela sale
+const createSale = async () => {
+    await connection.execute(
+        'INSERT INTO sales (date) VALUES (NOW())',
+    );
+};
+
 module.exports = {
     getAllSales,
     getSalesById,
+    createSaleProduct,
+    createSale,
+    getLastSaleId,
 };
