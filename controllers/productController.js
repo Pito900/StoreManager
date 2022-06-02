@@ -37,6 +37,21 @@ router.get('/:id', async (req, res) => {
   res.status(200).json(products[0]); // o zero é para tirar do vetor. Deixar apenas o objeto.
 });
 
+router.put('/:id', productsValidate.productsValidation, async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { name, quantity } = req.body;
+      await productsFromService.updateProducts(id, name, quantity);
+      const [allProducts] = await productsFromService.getProductById(id);
+      if (!allProducts[0]) {
+        return res.status(404).json({ message: 'Product not found' });
+      }
+      return res.status(200).json({ id, name, quantity });
+    } catch (error) {
+      return res.status(500).json({ message: error.message });
+    }
+});
+
 module.exports = {
   router,
 };

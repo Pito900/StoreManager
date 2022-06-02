@@ -15,9 +15,17 @@ const createProducts = async (name, quantity) => connection.execute(
     'INSERT INTO products (name, quantity) VALUES (?, ?)', [name, quantity],
 );
 
+// vamos criar a lógica para dar update nos produtos. Igual ao material
+const updateProducts = async (id, name, quantity) => connection.execute(
+    `UPDATE products SET name= ?, quantity = ?
+    WHERE id = ?
+    `, [name, quantity, id],
+);
+
 // exportando essa função para utilizarmos na camada de serviço.
 module.exports = {
     getAllProducts,
     getProductById,
     createProducts,
+    updateProducts,
 };
