@@ -9,13 +9,12 @@ const getSalesById = (id) => salesFromModel.getSalesById(id);
 
 const createSale = async (reqBody) => {
     salesFromModel.createSale(); // aqui estou criando uma nova linha na tabela sale
+    const lastSaleId = await salesFromModel.getLastSaleId();
     // agora, para cada reqBody vou criar um produto na tabela sale_products. Lembrando q o req.body vai vir como vetor
     reqBody.map(async (rbItem) => {
-        const lastSaleId = await salesFromModel.getLastSaleId();
         await salesFromModel.createSaleProduct(lastSaleId, rbItem);
     });
     // essa função retorna a estrutura a estrutura q vou precisa para a função do controller, para por na API oq foi colocado na base de dados.
-    const lastSaleId = salesFromModel.getLastSaleId();
     return { saleId: lastSaleId, item: reqBody };
 };
 
