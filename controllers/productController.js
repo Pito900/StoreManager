@@ -19,10 +19,10 @@ router.post('/', productsValidate.productsValidation, async (req, res) => {
     return res.status(409).json({ message: 'Product already exists' });
   }
   productsFromService.createProducts(name, quantity);
-  const newProductsList = await productsFromService.getAllProducts();
-  const [newProduct] = newProductsList[0].filter((product) => product.name === name 
+  const ALLproducts = await productsFromService.getAllProducts();
+  const [addedProduct] = ALLproducts[0].filter((product) => product.name === name 
    && product.quantity === quantity);
-  res.status(201).json(newProduct);
+  res.status(201).json(addedProduct);
 } catch (error) {
   res.status(500).json({ message: error.message });
 }
