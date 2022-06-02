@@ -19,7 +19,11 @@ const createProducts = async (name, quantity) => connection.execute(
 const updateProducts = async (id, name, quantity) => connection.execute(
     `UPDATE products SET name= ?, quantity = ?
     WHERE id = ?
-    `, [name, quantity, id],
+    ;`, [name, quantity, id],
+);
+
+const deleteProductId = async (id) => connection.execute(
+    'DELETE FROM products WHERE id = ?;', [id],
 );
 
 // exportando essa função para utilizarmos na camada de serviço.
@@ -28,4 +32,5 @@ module.exports = {
     getProductById,
     createProducts,
     updateProducts,
+    deleteProductId,
 };

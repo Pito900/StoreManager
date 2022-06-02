@@ -52,6 +52,20 @@ router.put('/:id', productsValidate.productsValidation, async (req, res) => {
     }
 });
 
+router.delete('/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const [allProducts] = await productsFromService.getProductById(id);
+    if (!allProducts[0]) {
+      return res.status(404).json({ message: 'Product not found' });
+    }
+    await productsFromService.deleteProductId(id);
+    return res.status(204).json({ message: `product ${id} off` });
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+});
+
 module.exports = {
   router,
 };

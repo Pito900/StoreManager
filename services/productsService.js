@@ -11,10 +11,13 @@ const createProducts = (name, quantity) => productsFromModel.createProducts(name
 
 const updateProducts = (id, name, quantity) => productsFromModel.updateProducts(id, name, quantity);
 
+const deleteProductId = (id) => productsFromModel.deleteProductId(id);
+
 // essa função, que retorna toda a tabela de produtos, vamos exportar para termos acesso na camada de controle.
 module.exports = {
     getAllProducts,
     getProductById,
     createProducts,
     updateProducts,
+    deleteProductId,
 };
