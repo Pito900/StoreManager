@@ -10,8 +10,12 @@ router.get('/', async (_req, res) => {
 });
 
 router.post('/', salesValidate.salesValidation, async (req, res) => {
-  await salesFromService.createSale(req.body);
-  res.status(201).json({ message: 'Item added successfully' });
+  try {
+  const saleCreated = await salesFromService.createSale(req.body);
+  res.status(201).json(saleCreated);
+} catch (error) {
+  res.status(500).json({ message: error.message });
+}
 });
 
 router.get('/:id', async (req, res) => {

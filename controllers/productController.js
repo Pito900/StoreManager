@@ -12,13 +12,20 @@ router.get('/', async (_req, res) => {
 
 // Vamos criar um método post para adicionar novos itens (toda a estrutura prévia já está montada)
 router.post('/', productsValidate.productsValidation, async (req, res) => {
+  try {
   const { name, quantity } = req.body;
   const [products] = await productsFromService.getAllProducts();
-  if (products.some((p) => p.name === name)) {
+  if (products.some((product) => product.name === name)) {
     return res.status(409).json({ message: 'Product already exists' });
   }
-  await productsFromService.createProducts(name, quantity);
-  res.status(201).json({ message: 'Item added successfully' });
+  productsFromService.createProducts(name, quantity);
+  const newProductsList = await productsFromService.getAllProducts();
+  const [newProduct] = newProductsList[0].filter((product) => product.name === name 
+   && product.quantity === quantity);
+  res.status(201).json(newProduct);
+} catch (error) {
+  res.status(500).json({ message: error.message });
+}
 });
 
 router.get('/:id', async (req, res) => {
