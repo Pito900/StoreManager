@@ -32,7 +32,7 @@ router.put('/:id', salesValidate.salesValidation, async (req, res) => {
     const { id } = req.params;
     const [allSales] = await salesFromService.getSalesById(id);
     if (!allSales[0]) {
-      return res.status(404).json({ message: 'Product not found' });
+      return res.status(404).json({ message: 'Sale not found' });
     }
     const saleUpdated = await salesFromService.updateSale(Number(id), req.body[0]);
     return res.status(200).json(saleUpdated);
