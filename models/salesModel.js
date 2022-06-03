@@ -51,10 +51,19 @@ const createSale = async () => {
     );
 };
 
+// update Sale
+
+const updateSales = async (saleId, { productId, quantity }) => connection.execute(
+    `UPDATE sales_products SET quantity = ?
+    WHERE product_id = ? AND sale_id = ?
+    ;`, [quantity, productId, saleId],
+);
+
 module.exports = {
     getAllSales,
     getSalesById,
     createSaleProduct,
     createSale,
     getLastSaleId,
+    updateSales,
 };

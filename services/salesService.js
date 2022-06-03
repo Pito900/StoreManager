@@ -18,9 +18,15 @@ const createSale = async (reqBody) => {
     return { id: lastSaleId, itemsSold: reqBody };
 };
 
+const updateSale = async (saleId, reqBody) => {
+    await salesFromModel.updateSales(saleId, reqBody);
+    return { saleId, itemUpdated: [reqBody] };
+};
+
 // essa função, que retorna toda a tabela de produtos, vamos exportar para termos acesso na camada de controle.
 module.exports = {
     getAllSales,
     getSalesById,
     createSale,
+    updateSale,
 };

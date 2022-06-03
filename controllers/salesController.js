@@ -27,6 +27,20 @@ router.get('/:id', async (req, res) => {
   res.status(200).json(sales);
 });
 
+router.put('/:id', salesValidate.salesValidation, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const [allSales] = await salesFromService.getSalesById(id);
+    if (!allSales[0]) {
+      return res.status(404).json({ message: 'Product not found' });
+    }
+    const saleUpdated = await salesFromService.updateSale(Number(id), req.body[0]);
+    return res.status(200).json(saleUpdated);
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+});
+
 module.exports = {
   router,
 };
