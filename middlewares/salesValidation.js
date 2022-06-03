@@ -6,9 +6,11 @@ const salesDTO = Joi.object({
 }).messages({
     'any.required': '400-{{#label}} is required',
     'number.positive': '422-{{#label}} must be greater than or equal to 1',
+    'number.base': '422-{{#label}} must be a number',
 });
 const salesValidation = (req, res, next) => {
-    const { error } = salesDTO.validate(req.body[0]); // esse [0] foi necessário pq o req.body n ta vindo como um objeto e sim um objeto dentro de um array
+    const { error } = salesDTO.validate(req.body[0], { abortEarly: false }); // esse [0] foi necessário pq o req.body n ta vindo como um objeto e sim um objeto dentro de um array
+    console.log(error);
     if (error) {
         const [code, message] = error.details[0].message.split('-');
         return res.status(code).json({ message });

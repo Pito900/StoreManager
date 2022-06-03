@@ -15,7 +15,7 @@ const createSale = async (reqBody) => {
         await salesFromModel.createSaleProduct(lastSaleId, rbItem);
     });
     // essa função retorna a estrutura a estrutura q vou precisa para a função do controller, para por na API oq foi colocado na base de dados.
-    return { saleId: lastSaleId, item: reqBody };
+    return { id: lastSaleId, itemsSold: reqBody };
 };
 
 // essa função, que retorna toda a tabela de produtos, vamos exportar para termos acesso na camada de controle.
