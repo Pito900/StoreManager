@@ -41,6 +41,20 @@ router.put('/:id', salesValidate.salesValidation, async (req, res) => {
   }
 });
 
+router.delete('/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const [allSales] = await salesFromService.getSalesById(id);
+    if (!allSales[0]) {
+      return res.status(404).json({ message: 'Sale not found' });
+    }
+    await salesFromService.deleteSaleId(id);
+    return res.status(204).json({ message: `Sale ${id} off` });
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+});
+
 module.exports = {
   router,
 };

@@ -10,7 +10,6 @@ const salesDTO = Joi.object({
 });
 const salesValidation = (req, res, next) => {
     const { error } = salesDTO.validate(req.body[0], { abortEarly: false }); // esse [0] foi necessário pq o req.body n ta vindo como um objeto e sim um objeto dentro de um array
-    console.log(error);
     if (error) {
         const [code, message] = error.details[0].message.split('-');
         return res.status(code).json({ message });

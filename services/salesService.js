@@ -23,10 +23,13 @@ const updateSale = async (saleId, reqBody) => {
     return { saleId, itemUpdated: [reqBody] };
 };
 
+const deleteSaleId = (id) => salesFromModel.deleteSaleId(id);
+
 // essa função, que retorna toda a tabela de produtos, vamos exportar para termos acesso na camada de controle.
 module.exports = {
     getAllSales,
     getSalesById,
     createSale,
     updateSale,
+    deleteSaleId,
 };

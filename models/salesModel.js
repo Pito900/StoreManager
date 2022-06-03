@@ -59,6 +59,11 @@ const updateSales = async (saleId, { productId, quantity }) => connection.execut
     ;`, [quantity, productId, saleId],
 );
 
+// delete sale 
+const deleteSaleId = async (id) => connection.execute(
+    'DELETE FROM sales WHERE id = ?;', [id],
+);
+
 module.exports = {
     getAllSales,
     getSalesById,
@@ -66,4 +71,5 @@ module.exports = {
     createSale,
     getLastSaleId,
     updateSales,
+    deleteSaleId,
 };
