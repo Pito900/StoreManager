@@ -8,6 +8,10 @@ router.get('/', async (_req, res) => {
   const [sales] = await salesFromService.getAllSales();
   res.status(200).json(sales);
 });
+router.get('/', async (_req, res) => {
+  const [sales] = await salesFromService.getAllSales();
+  res.status(200).json(sales);
+});
 
 router.post('/', salesValidate.salesValidation, async (req, res) => {
   try {
