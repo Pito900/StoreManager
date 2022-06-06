@@ -6,7 +6,10 @@ const router = express.Router();
 // a formatação async é necessária (sempre lembrar disso)
 const getAllProducts = async (_req, res) => {
   const [products] = await productsFromService.getAllProducts();
-  res.status(200).json(products);
+  if (!products) {
+   return res.status(404).json([]);
+  }
+ return res.status(200).json(products);
 };
 
 // Vamos criar um método post para adicionar novos itens (toda a estrutura prévia já está montada)
@@ -30,10 +33,11 @@ const createProducts = async (req, res) => {
 const getProductById = async (req, res) => {
   const { id } = req.params;
   const [products] = await productsFromService.getProductById(id);
-  if (!products.length) {
+  if (!products || products.length === 0) {
     return res.status(404).json({ message: 'Product not found' });
   }
-  res.status(200).json(products[0]); // o zero é para tirar do vetor. Deixar apenas o objeto.
+  console.log(products[0]);
+  return res.status(200).json(products[0]); // o zero é para tirar do vetor. Deixar apenas o objeto.
 };
 
 const updateProducts = async (req, res) => {
