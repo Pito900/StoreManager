@@ -5,6 +5,10 @@ const router = express.Router();
 // a formatação async é necessária (sempre lembrar disso)
 const getAllSales = async (_req, res) => {
   const [sales] = await salesFromService.getAllSales();
+  console.log(sales);
+  if (!sales) {
+    return res.status(404).send([]);
+   }
   res.status(200).json(sales);
 };
 

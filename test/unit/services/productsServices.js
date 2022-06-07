@@ -91,19 +91,27 @@ describe('Buscando produtos na base pelo id do produto', () => {
   });
 
   describe('Update um product', () => {
-  
+    const UPDATE__WRONG_ID = { id: 999, name: 'Capa de invisibilidade', quantity: 1 };
+    const UPDATE_PRODUCT = {
+      fieldCount: 0,
+      affectedRows: 1,
+      insertId: 4,
+      info: '',
+      serverStatus: 2,
+      warningStatus: 0
+    };
     describe('Quando o id não existe na base', () => {
       before(() => {
-        sinon.stub(productsModel, 'getProductById').resolves([[], []]);
+        sinon.stub(productsService, 'updateProducts').resolves([[], []]);
       });
   
       after(() => {
-        productsModel.getProductById.restore();
+        productsService.updateProducts.restore();
       });
   
       it('Deve retornar um vetor vazio', async () => {
-        await productsService.updateProducts(999, 'Product 1', 1);
-        const result = await productsService.getProductById(999);
+        const result = await productsService.updateProducts(UPDATE__WRONG_ID.id, UPDATE__WRONG_ID.name, UPDATE__WRONG_ID.quantity);
+    
         expect(result[0]).to.be.an('array');
         expect(result[0]).to.be.empty;
       });
@@ -111,20 +119,18 @@ describe('Buscando produtos na base pelo id do produto', () => {
   
     describe('Quando o produto existe e o update é conseguido', () => {
       before(() => {
-        sinon.stub(productsModel, 'getProductById').resolves([[UPGRATED_PRODUCT], []]);
+        sinon.stub(productsService, 'updateProducts').resolves([[UPDATE_PRODUCT], []]);
       });
   
       after(() => {
-        productsModel.getProductById.restore();
+        productsService.updateProducts.restore();
       });
   
       it('Deve retornar o produto que sofreu o update', async () => {
-        await productsService.updateProducts(1,'Báculo', 1);
-        const result = await productsModel.getProductById(1);
+        const result = await productsService.updateProducts(1,'Báculo', 1);
+
         expect(result[0][0]).to.be.an('object');
-        expect(result[0][0]).to.have.property('id', 1);
-        expect(result[0][0]).to.have.property('name', 'Báculo');
-        expect(result[0][0]).to.have.property('quantity', 1);
+        expect(result[0][0]).to.have.property('affectedRows', 1)
       });
     });
   });

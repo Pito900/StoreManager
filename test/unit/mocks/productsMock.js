@@ -4,6 +4,7 @@
   const PRODUCT_3 = { "id": 3, "name": "Escudo do Capitão América", "quantity": 30 };
   
   const UPGRATED_PRODUCT = { "id": 1, "name": "Báculo", "quantity": 1 };
+  const DELETED_PRODUCT = { "id": 1, "name": "Martelo de Thor", "quantity": 10 };
   
   const PRODUCTS_LIST = [PRODUCT_1, PRODUCT_2];
   
