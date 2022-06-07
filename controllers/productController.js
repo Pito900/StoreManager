@@ -36,7 +36,6 @@ const getProductById = async (req, res) => {
   if (!products || products.length === 0) {
     return res.status(404).json({ message: 'Product not found' });
   }
-  console.log(products[0]);
   return res.status(200).json(products[0]); // o zero é para tirar do vetor. Deixar apenas o objeto.
 };
 
